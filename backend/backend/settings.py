@@ -13,6 +13,7 @@ import datetime
 import os
 
 import environ
+from corsheaders.defaults import default_headers, default_methods
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,6 +29,12 @@ AUTH_USER_MODEL = "userauth.User"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+CORS_ALLOW_CREDENTIALS = False
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 
 ALLOWED_HOSTS = ["*"]
 
@@ -87,14 +94,6 @@ TEMPLATES = [
         },
     },
 ]
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = list(CORS_ALLOWED_ORIGINS)
-CORS_ALLOW_HEADERS = list(CORS_ALLOWED_ORIGINS)
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
