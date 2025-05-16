@@ -24,6 +24,8 @@ PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h9u2$y3xd=(qbkm*xbu4)i$2t6o-94+!v+!y^@e+j-r%-%lx7w'
 
+AUTH_USER_MODEL = "userauth.User"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'todo',
+    'userauth',
     'corsheaders',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -55,7 +58,6 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -102,7 +104,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DB_ENGINE = "django.db.backends.postgresql"
 DB_USER = env("USER")
-# DB_USER = "sourcorrect"
 DB_PASSWORD = env("PASSWORD")
 DB_HOST = env("HOST")
 DB_PORT = "5432"
@@ -148,7 +149,6 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
     "VERIFYING_KEY": None,
-    "AUTH_HEADER_TYPES": ("JWT",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),

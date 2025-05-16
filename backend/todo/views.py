@@ -1,7 +1,7 @@
 import traceback
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from api.renderers import MyJSONRenderer
@@ -9,7 +9,7 @@ from .models import Todo
 from .serializers import TodoSerializer
 
 class TodoViewSet(ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     renderer_classes = [MyJSONRenderer]
     serializer_class = TodoSerializer
     queryset = Todo.objects.all()
