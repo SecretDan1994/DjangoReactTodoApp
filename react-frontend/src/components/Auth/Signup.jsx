@@ -14,7 +14,7 @@ const Signup = () => {
   };
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
+    <form className="auth-container" onSubmit={handleSubmit}>
       <h2>Signup</h2>
       <input
         type="text"
