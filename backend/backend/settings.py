@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import datetime
 import os
 
 import environ
@@ -42,9 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'api',
     'todo',
     'corsheaders',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 25,
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+}
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -80,8 +91,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = True
-CORS_ALLOW_HEADERS = True
+CORS_ALLOW_METHODS = list(CORS_ALLOWED_ORIGINS)
+CORS_ALLOW_HEADERS = list(CORS_ALLOWED_ORIGINS)
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -129,6 +140,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": None,
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": datetime.timedelta(days=1),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
