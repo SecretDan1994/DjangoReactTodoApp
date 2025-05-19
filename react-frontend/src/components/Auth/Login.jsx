@@ -21,12 +21,14 @@ const Login = () => {
         type="text"
         placeholder="Username"
         value={credentials.email}
+        required={true}
         onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
       />
       <input
         type="password"
         placeholder="Password"
         value={credentials.password}
+        required={true}
         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
       />
       <button type="submit">Login</button>
