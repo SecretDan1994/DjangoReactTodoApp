@@ -1,16 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
 import api from '../../services/api';
 import './TodoList.scss';
+import {useNavigate} from "react-router-dom";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodos = async () => {
-        const response = await api.get('/todo/todo-list/');
-        setTodos(response.data.data);
-    };
-    fetchTodos();
+      if (localStorage.getItem('email')){
+          const fetchTodos = async () => {
+              const response = await api.get('/todo/todo-list/');
+              setTodos(response.data.data);
+          };
+          fetchTodos();
+      } else {
+          navigate('/login');
+      }
   }, []);
 
   return (
