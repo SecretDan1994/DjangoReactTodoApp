@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ const Login = () => {
       <input
         type="text"
         placeholder="Username"
-        value={credentials.username}
-        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+        value={credentials.email}
+        onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
       />
       <input
         type="password"
