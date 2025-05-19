@@ -9,7 +9,9 @@ class TodoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        todo, todo_created = Todo.objects.get_or_create(title=validated_data.get('title'))
+        request = self.context.get('request')
+        user = request.user
+        todo, todo_created = Todo.objects.get_or_create(title=validated_data.get('title'), user=user)
         todo.__dict__.update(**validated_data)
         todo.save()
 
