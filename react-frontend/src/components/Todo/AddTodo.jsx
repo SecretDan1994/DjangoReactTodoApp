@@ -28,6 +28,7 @@ const AddTodo = () => {
         type="text"
         placeholder="Enter todo description"
         value={description}
+        required={true}
         onChange={(e) => setDescription(e.target.value)}
       />
       <button type="submit">Add</button>
