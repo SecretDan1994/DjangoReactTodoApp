@@ -20,11 +20,11 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./react-frontend
     env_file:
       - .env
     volumes:
-      - ./frontend:/app
+      - ./react-frontend:/app
       - /app/node_modules
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT_INTERNAL}"
