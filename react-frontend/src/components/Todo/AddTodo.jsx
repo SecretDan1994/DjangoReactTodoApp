@@ -21,6 +21,7 @@ const AddTodo = () => {
         type="text"
         placeholder="Enter todo title"
         value={title}
+        required={true}
         onChange={(e) => setTitle(e.target.value)}
       />
       <input

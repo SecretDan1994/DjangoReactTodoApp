@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,7 +7,7 @@ from .models import User
 
 class UserApiView(ModelViewSet):
     renderer_classes = [MyJSONRenderer]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
         user_keys = ['email', 'first_name', 'last_name', 'password']
@@ -16,12 +16,14 @@ class UserApiView(ModelViewSet):
         message = None
         if not email:
             message = "Please provide email."
-        if not first_name:
+        elif not first_name:
             message = "Please provide first name."
-        if not last_name:
+        elif not last_name:
             message = "Please provide last name."
+        elif not password:
+            message = "Please enter a password."
 
-        if not email or not first_name or not last_name:
+        if not (email and first_name and last_name and password):
             return Response({"reason": message}, status=status.HTTP_400_BAD_REQUEST)
 
         existing_user = User.objects.filter(email=email)
