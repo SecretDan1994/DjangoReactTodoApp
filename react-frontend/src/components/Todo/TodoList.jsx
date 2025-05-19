@@ -7,8 +7,8 @@ const TodoList = () => {
 
   useEffect(() => {
     const fetchTodos = async () => {
-      const response = await api.get('/api/todo/todo-list');
-      setTodos(response.data);
+        const response = await api.get('/todo/todo-list/');
+        setTodos(response.data.data);
     };
     fetchTodos();
   }, []);

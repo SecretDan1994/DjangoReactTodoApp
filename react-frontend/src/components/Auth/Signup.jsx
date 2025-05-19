@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import axios from 'axios';
+import api from '../../services/api'
 import { useNavigate } from 'react-router-dom';
 import './Signup.scss';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:8000/api/signup/', formData);
+    await api.post('/userauth/signup/', formData);
     navigate('/login');
   };
 
@@ -19,8 +20,8 @@ const Signup = () => {
       <input
         type="text"
         placeholder="Username"
-        value={formData.username}
-        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       />
       <input
         type="password"

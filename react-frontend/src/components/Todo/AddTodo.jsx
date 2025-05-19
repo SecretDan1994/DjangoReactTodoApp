@@ -5,11 +5,12 @@ import './AddTodo.scss';
 
 const AddTodo = () => {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await api.post('/todos/', { title });
+    await api.post('/todo/todo-list/', { title, description });
     navigate('/');
   };
 
@@ -21,6 +22,12 @@ const AddTodo = () => {
         placeholder="Enter todo title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Enter todo description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <button type="submit">Add</button>
     </form>

@@ -30,12 +30,6 @@ AUTH_USER_MODEL = "userauth.User"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ALLOW_CREDENTIALS = False
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-
 ALLOWED_HOSTS = ["*"]
 
 env = environ.Env()
@@ -44,6 +38,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +49,6 @@ INSTALLED_APPS = [
     'api',
     'todo',
     'userauth',
-    'corsheaders',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
 ]
@@ -172,3 +166,7 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True

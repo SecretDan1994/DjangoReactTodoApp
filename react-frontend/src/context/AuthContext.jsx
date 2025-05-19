@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
 import api from '../services/api';
 export const AuthContext = createContext();
 
@@ -11,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (authTokens) {
-      setUser({ username: 'User' });
+      setUser({ email: localStorage.getItem('email') });
     } else {
       setUser(null);
     }
@@ -22,7 +21,8 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/token/', credentials);
       setAuthTokens(response.data);
       localStorage.setItem('authTokens', JSON.stringify(response.data));
-      setUser({ username: 'User' });
+      localStorage.setItem('email', credentials.email);
+      setUser({ email: credentials.email});
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
