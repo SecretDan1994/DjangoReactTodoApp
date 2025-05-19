@@ -22,12 +22,13 @@ class TodoViewSet(ModelViewSet):
             Response: The response containing the shipment data.
         """
         try:
+            qs = self.get_queryset().filter(user=request.user)
             if request.GET:
                 serializer = self.get_serializer(data=request.GET)
                 serializer.is_valid(raise_exception=True)
-                serializer = self.get_serializer(self.get_queryset().filter(title=serializer.data.get('title')), many=True)
+                serializer = self.get_serializer(qs.filter(title=serializer.data.get('title')), many=True)
             else:
-                serializer = self.get_serializer(self.get_queryset(), many=True)
+                serializer = self.get_serializer(qs, many=True)
             return Response(data=serializer.data,
                             status=status.HTTP_200_OK)
 
