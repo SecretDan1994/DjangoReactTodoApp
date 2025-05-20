@@ -11,7 +11,11 @@ const TodoList = () => {
       if (localStorage.getItem('email')){
           const fetchTodos = async () => {
               const response = await api.get('/todo/todo-list/');
-              setTodos(response.data.data);
+              let respData = response.data.data;
+              respData = respData.map((data) => (
+                  {...data, expanded:false}
+              ));
+              setTodos(respData);
           };
           fetchTodos();
       } else {
@@ -19,14 +23,40 @@ const TodoList = () => {
       }
   }, []);
 
+  const toggleExpand = (id) => {
+    setTodos(todos =>
+      todos.map(todo =>
+        todo.id === id ? { ...todo, expanded: !todo.expanded} : todo
+      )
+    );
+  };
+
   return (
     <div className="todo-list">
       <h2>Your Todos</h2>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.title}</li>
-        ))}
-      </ul>
+      {todos.length === 0 ? (
+        <p>No todos available.</p>
+      ) : (
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.id} className="todo-item">
+              <div
+                className="todo-title interactive"
+                onClick={() => toggleExpand(todo.id)}
+              >
+                {todo.title}
+              </div>
+              <div
+                className={`todo-description-wrapper${todo.expanded ? ' expanded' : ''}`}
+              >
+                <div className="todo-description">
+                  {todo.description || 'No description'}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
