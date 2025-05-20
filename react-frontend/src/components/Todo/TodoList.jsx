@@ -12,10 +12,9 @@ const TodoList = () => {
           const fetchTodos = async () => {
               const response = await api.get('/todo/todo-list/');
               let respData = response.data.data;
-              respData = respData.map((data) => (
+              setTodos(respData.map((data) => (
                   {...data, expanded:false}
-              ));
-              setTodos(respData);
+              )));
           };
           fetchTodos();
       } else {
@@ -24,8 +23,7 @@ const TodoList = () => {
   }, []);
 
   const toggleExpand = (id) => {
-    setTodos(todos =>
-      todos.map(todo =>
+    setTodos(todos.map(todo =>
         todo.id === id ? { ...todo, expanded: !todo.expanded} : todo
       )
     );
